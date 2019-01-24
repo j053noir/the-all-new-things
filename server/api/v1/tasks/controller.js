@@ -80,5 +80,20 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  res.json({});
+  const index = tasks.findIndex(t => t.id === +req.params.id);
+  if (index >= 0) {
+    const task = tasks[index];
+
+    tasks.splice(index, 1);
+
+    res.json({
+      message: `Task (${task.id}) deleted`,
+    });
+    return;
+  }
+  next({
+    message: `Task (${req.params.id}) not found`,
+    statusCode: 404,
+    type: 'warn',
+  });
 };
