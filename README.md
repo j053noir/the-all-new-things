@@ -8,7 +8,7 @@ Public API that allows users to manage their personal tasks.
 
 Clone this repository and run in the directory
 
-```
+```shell
 git clone https://github.com/j053noir/the-all-new-things.git && cd the-all-new-things
 ```
 
@@ -35,6 +35,16 @@ To start the server in development mode run:
 ```shell
 npm run dev
 ```
+
+# API V1
+
+| Route           | Method | Parameters | Body                                | Description               |
+| --------------- | :----: | ---------: | ----------------------------------- | ------------------------- |
+| /api/tasks      |  GET   |          - | -                                   | Gets all tasks            |
+| /api/tasks      |  POST  |            | description: string, author: string | Creates a new task        |
+| /api/tasks/{id} |  GET   | id: number | -                                   | Get task with Id {id}     |
+| /api/tasks/{id} |  PUT   | id: number | description: string, author: string | Updates task with Id {id} |
+| /api/tasks/{id} | DELETE | id: number | -                                   | Deletes task with Id {id} |
 
 ## Testing
 
