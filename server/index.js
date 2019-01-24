@@ -1,8 +1,14 @@
 const express = require('express');
+const morgan = require('morgan');
 const logger = require('./config/logger');
 
 // Init app
 const app = express();
+
+app.use(
+  // eslint-disable-next-line comma-dangle
+  morgan('combined', { stream: { write: message => logger.info(message) } })
+);
 
 // Routes
 app.get('/', (req, res, next) => {
