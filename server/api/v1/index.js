@@ -1,15 +1,13 @@
 const router = require('express').Router();
 
+const tasks = require('./tasks/routes');
+
 router.route('/').get((req, res, next) => {
   res.json({
-    message: 'Welcome to the API',
+    message: 'Welcome to the API V1',
   });
 });
 
-router.route('/tasks').get((req, res, next) => {
-  res.json({
-    message: 'GET all tasks',
-  });
-});
+router.use('/tasks', tasks);
 
 module.exports = router;
