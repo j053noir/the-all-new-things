@@ -1,0 +1,37 @@
+{
+  "name": "the-all-new-things",
+  "version": "1.0.0",
+  "description": "API pública que permite a losusuarios administrar las ​Tareas (​tasks​) personales",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node index",
+    "test": "cross-env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=development nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j053noir/the-all-new-things.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/j053noir/the-all-new-things/issues"
+  },
+  "homepage": "https://github.com/j053noir/the-all-new-things#readme",
+  "devDependencies": {
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.15.0",
+    "nodemon": "^1.18.9"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-request-id": "^1.4.1",
+    "morgan": "^1.9.1",
+    "winston": "^3.1.0"
+  }
+}
