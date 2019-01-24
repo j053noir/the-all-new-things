@@ -1,3 +1,3 @@
 # the-all-new-things
 
-API pública que permite a losusuarios administrar las ​Tareas (​tasks​) personales
+API pública que permite a los usuarios administrar las ​Tareas (​tasks​) personales.
