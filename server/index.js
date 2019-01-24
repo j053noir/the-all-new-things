@@ -35,7 +35,9 @@ app.use((err, req, res, next) => {
   const { message, statusCode = 500, type = 'error' } = err;
   const log = `${logger.header(req)} ${statusCode} ${message}`;
 
-  logger[type](log);
+  if (typeof logger[type] === 'function') {
+    logger[type](log);
+  }
 
   res.status(statusCode);
   res.json({
