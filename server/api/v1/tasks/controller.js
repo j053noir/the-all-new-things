@@ -29,11 +29,21 @@ exports.create = (req, res, next) => {
 };
 
 exports.all = (req, res, next) => {
-  res.json(tasks);
+  res.json(tasks.slice());
 };
 
 exports.read = (req, res, next) => {
-  res.json({});
+  const task = tasks.find(t => t.id === +req.params.id);
+
+  if (task) {
+    res.json(task);
+    return;
+  }
+  next({
+    message: `Task (${req.params.id}) not found`,
+    statusCode: 400,
+    type: 'warn',
+  });
 };
 
 exports.update = (req, res, next) => {
