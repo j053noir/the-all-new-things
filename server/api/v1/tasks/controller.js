@@ -1,9 +1,11 @@
+const tasks = [];
+
 exports.create = (req, res, next) => {
   res.json({});
 };
 
 exports.all = (req, res, next) => {
-  res.json({});
+  res.json(tasks);
 };
 
 exports.read = (req, res, next) => {
