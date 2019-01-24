@@ -41,7 +41,7 @@ exports.read = (req, res, next) => {
   }
   next({
     message: `Task (${req.params.id}) not found`,
-    statusCode: 400,
+    statusCode: 404,
     type: 'warn',
   });
 };
