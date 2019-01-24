@@ -47,7 +47,36 @@ exports.read = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-  res.json({});
+  if (req.body.description && req.body.author) {
+    const index = tasks.findIndex(t => t.id === +req.params.id);
+
+    if (index >= 0) {
+      const task = {
+        id: tasks[index].id,
+        description: req.body.description,
+        author: req.body.author,
+        createdAt: tasks[index].createdAt,
+        updatedAt: currentDate(),
+      };
+
+      tasks.splice(index, 1, task);
+
+      res.json({
+        message: `Task (${task.id}) updated`,
+      });
+      return;
+    }
+    next({
+      message: `Task (${req.params.id}) not found`,
+      statusCode: 404,
+      type: 'warn',
+    });
+  }
+  next({
+    message: 'Params "description" and "author" are required',
+    statusCode: 400,
+    type: 'warn',
+  });
 };
 
 exports.delete = (req, res, next) => {
