@@ -34,67 +34,25 @@ exports.all = (req, res, next) => {
 };
 
 exports.read = (req, res, next) => {
-  const task = tasks.find(t => t.id === +req.params.id);
-
-  if (task) {
-    res.json(task);
-    return;
-  }
   next({
-    message: `Task (${req.params.id}) not found`,
-    statusCode: 404,
+    message: 'Task read has not been implemented yet',
+    statusCode: 501,
     type: 'warn',
   });
 };
 
 exports.update = (req, res, next) => {
-  if (req.body.description && req.body.author) {
-    const index = tasks.findIndex(t => t.id === +req.params.id);
-
-    if (index >= 0) {
-      const task = {
-        id: tasks[index].id,
-        description: req.body.description,
-        author: req.body.author,
-        createdAt: tasks[index].createdAt,
-        updatedAt: currentDate(),
-      };
-
-      tasks.splice(index, 1, task);
-
-      res.json({
-        message: `Task (${task.id}) updated`,
-      });
-      return;
-    }
-    next({
-      message: `Task (${req.params.id}) not found`,
-      statusCode: 404,
-      type: 'warn',
-    });
-  }
   next({
-    message: 'Params "description" and "author" are required',
-    statusCode: 400,
+    message: 'Task read has not been implemented yet',
+    statusCode: 501,
     type: 'warn',
   });
 };
 
 exports.delete = (req, res, next) => {
-  const index = tasks.findIndex(t => t.id === +req.params.id);
-  if (index >= 0) {
-    const task = tasks[index];
-
-    tasks.splice(index, 1);
-
-    res.json({
-      message: `Task (${task.id}) deleted`,
-    });
-    return;
-  }
   next({
-    message: `Task (${req.params.id}) not found`,
-    statusCode: 404,
+    message: 'Task read has not been implemented yet',
+    statusCode: 501,
     type: 'warn',
   });
 };
