@@ -13,6 +13,7 @@ exports.connect = () => {
 
   mongoose.connect(url, {
     useNewUrlParser: true,
+    auto_reconnect: true,
   });
 
   mongoose.connection.on('open', () => {
@@ -25,6 +26,18 @@ exports.connect = () => {
 
   mongoose.connection.on('error', err => {
     logger.error(`Database connection error: ${err}`);
+  });
+
+  mongoose.connection.on('reconnected', () => {
+    logger.info('Database reconnected');
+  });
+
+  mongoose.connection.on('disconnected', () => {
+    logger.warn('Database disconnected');
+    mongoose.connect(url, {
+      useNewUrlParser: true,
+      auto_reconnect: true,
+    });
   });
 
   process.on('SIGINT', () => {
