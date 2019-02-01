@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 
 const logger = require('./config/logger');
 const api = require('./api/v1');
+const database = require('./database');
+
+// Connect to database
+database.connect();
 
 // Init app
 const app = express();
