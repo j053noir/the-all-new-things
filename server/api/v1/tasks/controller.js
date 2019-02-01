@@ -1,5 +1,27 @@
 const Model = require('./model');
 
+exports.id = (req, res, next, id) => {
+  Model.findById(id)
+    .exec()
+    .then(doc => {
+      if (!doc) {
+        const message = `${Model.modelName} not found`;
+
+        next({
+          message,
+          statusCode: 404,
+          type: 'warn',
+        });
+      } else {
+        req.doc = doc;
+        next();
+      }
+    })
+    .catch(err => {
+      next(new Error(err));
+    });
+};
+
 exports.create = (req, res, next) => {
   const { body } = req;
   if (!body.description && !body.author) {
@@ -34,25 +56,34 @@ exports.all = (req, res, next) => {
 };
 
 exports.read = (req, res, next) => {
-  next({
-    message: 'Task read has not been implemented yet',
-    statusCode: 501,
-    type: 'warn',
-  });
+  const { doc } = req;
+  res.json(doc);
 };
 
 exports.update = (req, res, next) => {
-  next({
-    message: 'Task read has not been implemented yet',
-    statusCode: 501,
-    type: 'warn',
-  });
+  const { doc, body } = req;
+
+  Object.assign(doc, body);
+
+  doc
+    .save()
+    .then(updated => {
+      res.json(updated);
+    })
+    .catch(err => {
+      next(new Error(err));
+    });
 };
 
 exports.delete = (req, res, next) => {
-  next({
-    message: 'Task read has not been implemented yet',
-    statusCode: 501,
-    type: 'warn',
-  });
+  const { doc } = req;
+
+  doc
+    .remove()
+    .then(removed => {
+      res.json(removed);
+    })
+    .catch(err => {
+      next(new Error(err));
+    });
 };
