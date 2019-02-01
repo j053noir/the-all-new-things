@@ -28,6 +28,7 @@ app.use('/api/v1', api);
 // No route found handler
 app.use((req, res, next) => {
   next({
+    error: true,
     message: 'Route not found',
     statusCode: 404,
     type: 'warn',
@@ -45,6 +46,8 @@ app.use((err, req, res, next) => {
 
   res.status(statusCode);
   res.json({
+    error: true,
+    statusCode,
     message,
   });
 });
