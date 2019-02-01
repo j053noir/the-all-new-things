@@ -1,35 +1,36 @@
-const tasks = [];
-
-function currentDate() {
-  const d = new Date();
-  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
-}
+const Model = require('./model');
 
 exports.create = (req, res, next) => {
-  if (req.body.description && req.body.author) {
-    const task = {
-      id: tasks.length + 1,
-      description: req.body.description,
-      author: req.body.author,
-      createdAt: currentDate(),
-      updatedAt: null,
-    };
-    tasks.push(task);
-    res.status(201);
-    res.json({
-      message: 'Task created',
+  const { body } = req;
+  if (!body.description && !body.author) {
+    next({
+      message: 'Param "description" is required',
+      statusCode: 400,
+      type: 'warn',
     });
-    return;
+  } else {
+    const document = new Model(body);
+
+    document
+      .save()
+      .then(doc => {
+        res.json(doc);
+      })
+      .catch(err => {
+        next(new Error(err));
+      });
   }
-  next({
-    message: 'Params "description" and "author" are required',
-    statusCode: 400,
-    type: 'warn',
-  });
 };
 
 exports.all = (req, res, next) => {
-  res.json(tasks.slice());
+  Model.find()
+    .exec()
+    .then(docs => {
+      res.json(docs);
+    })
+    .catch(err => {
+      next(new Error(err));
+    });
 };
 
 exports.read = (req, res, next) => {
