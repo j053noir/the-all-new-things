@@ -1,15 +1,12 @@
+const logger = require.main.require('./server/config/logger');
 const { paginationParseParams } = require.main.require('./server/utils/');
 const { sortParseParams, sortCompactToStr } = require.main.require(
   './server/utils'
 );
-const { Model, fields, references } = require('./model');
-
-const referencesNames = Object.getOwnPropertyNames(references);
+const { Model, fields } = require('./model');
 
 exports.id = (req, res, next, id) => {
-  const populate = referencesNames.join(' ');
   Model.findById(id)
-    .populate(populate)
     .exec()
     .then(doc => {
       if (!doc) {
@@ -51,13 +48,11 @@ exports.all = (req, res, next) => {
   const { query = {} } = req;
   const { limit, page, skip } = paginationParseParams(query);
   const { sortBy, direction } = sortParseParams(query, fields);
-  const populate = referencesNames.join(' ');
 
   const all = Model.find()
     .sort(sortCompactToStr(sortBy, direction))
     .limit(limit)
-    .skip(skip)
-    .populate(populate);
+    .skip(skip);
   const count = Model.countDocuments();
 
   Promise.all([all.exec(), count.exec()])
