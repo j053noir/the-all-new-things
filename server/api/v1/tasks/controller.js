@@ -23,28 +23,20 @@ exports.id = (req, res, next, id) => {
 
 exports.create = (req, res, next) => {
   const { body } = req;
-  if (!body.description && !body.author) {
-    next({
-      message: 'Param "description" is required',
-      statusCode: 400,
-      type: 'warn',
-    });
-  } else {
-    const document = new Model(body);
+  const doc = new Model(body);
 
-    document
-      .save()
-      .then(doc => {
-        res.status(201);
-        res.json({
-          success: true,
-          item: doc,
-        });
-      })
-      .catch(err => {
-        next(new Error(err));
+  doc
+    .save()
+    .then(created => {
+      res.status(201);
+      res.json({
+        success: true,
+        item: created,
       });
-  }
+    })
+    .catch(err => {
+      next(new Error(err));
+    });
 };
 
 exports.all = (req, res, next) => {
