@@ -22,6 +22,17 @@ In the root folder rename the ".env.example" file to ".env", and change the SERV
 SERVER_PORT=3000
 ```
 
+
+Set the url, username and password of your MONGODB server,in the ".env" file
+
+```text
+DATABASE_URL=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
+```
+
+If the database doesn't need username and password leave the fields empty.
+
 ## Start the server
 
 To start the server in production mode run:
@@ -36,15 +47,21 @@ To start the server in development mode run:
 npm run dev
 ```
 
-# API V1
+# API V1.1
 
-| Route           | Method | Parameters | Body                                | Description               |
-| --------------- | :----: | ---------: | ----------------------------------- | ------------------------- |
-| /api/tasks      |  GET   |          - | -                                   | Gets all tasks            |
-| /api/tasks      |  POST  |            | description: string, author: string | Creates a new task        |
-| /api/tasks/{id} |  GET   | id: number | -                                   | Get task with Id {id}     |
-| /api/tasks/{id} |  PUT   | id: number | description: string, author: string | Updates task with Id {id} |
-| /api/tasks/{id} | DELETE | id: number | -                                   | Deletes task with Id {id} |
+| Route           | Method | Parameters | Body                                               | Description               |
+| --------------- | :----: | ---------: | -------------------------------------------------- | ------------------------- |
+| /api/tasks      |  GET   |          - | -                                                  | Gets all tasks            |
+| /api/tasks      |  POST  |            | description: string, author: string (userId)       | Creates a new task        |
+| /api/tasks/{id} |  GET   | id: number | -                                                  | Gets task with Id {id}    |
+| /api/tasks/{id} |  PUT   | id: number | description: string, author: string (userId)       | Updates task with Id {id} |
+| /api/tasks/{id} | DELETE | id: number | -                                                  | Deletes task with Id {id} |
+| /api/users      |  GET   |          - | -                                                  | Gets all users            |
+| /api/users      |  POST  |            | firstname: string, lastname: string, email: string | Creates a new user        |
+| /api/users/{id} |  GET   | id: number | -                                                  | Gets user with Id {id}    |
+| /api/users/{id} |  PUT   | id: number | firstname: string, lastname: string, email: string | Updates user with Id {id} |
+| /api/users/{id} | DELETE | id: number | -                                                  | Deletes user with Id {id} |
+
 
 ## Testing
 
