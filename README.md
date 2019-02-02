@@ -22,6 +22,7 @@ In the root folder rename the ".env.example" file to ".env", and change the SERV
 SERVER_PORT=3000
 ```
 
+
 Set the url, username and password of your MONGODB server,in the ".env" file
 
 ```text
@@ -60,6 +61,7 @@ npm run dev
 | /api/users/{id} |  GET   | id: number | -                                                  | Gets user with Id {id}    |
 | /api/users/{id} |  PUT   | id: number | firstname: string, lastname: string, email: string | Updates user with Id {id} |
 | /api/users/{id} | DELETE | id: number | -                                                  | Deletes user with Id {id} |
+
 
 ## Testing
 
