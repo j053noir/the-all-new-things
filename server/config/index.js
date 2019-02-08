@@ -24,6 +24,9 @@ const config = {
       fields: ['asc', 'desc'],
     },
   },
+  token: {
+    secret: process.env.TOKEN_SECRET,
+  },
 };
 
 module.exports = config;

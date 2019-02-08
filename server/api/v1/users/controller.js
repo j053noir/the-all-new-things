@@ -1,9 +1,9 @@
-const logger = require.main.require('./server/config/logger');
 const { paginationParseParams } = require.main.require('./server/utils/');
 const { sortParseParams, sortCompactToStr } = require.main.require(
-  './server/utils'
+  './server/utils' // eslint-disable-line comma-dangle
 );
 const { Model, fields } = require('./model');
+const { signToken } = require('./../auth');
 
 exports.id = (req, res, next, id) => {
   Model.findById(id)
@@ -24,6 +24,66 @@ exports.id = (req, res, next, id) => {
     .catch(err => {
       next(new Error(err));
     });
+};
+
+exports.signin = (req, res, next) => {
+  const { body = {} } = req;
+  const { email = '', password = '' } = body;
+
+  if (email === '' || password === '') {
+    const message = 'Email or password are required';
+
+    next({
+      success: false,
+      message,
+      statusCode: 400,
+      type: 'info',
+    });
+  } else {
+    let user = {};
+    Model.findOne({ email })
+      .exec()
+      .then(doc => {
+        if (!doc) {
+          const message = 'Email or password are not valid';
+
+          next({
+            success: false,
+            message,
+            statusCode: 200,
+            type: 'info',
+          });
+        }
+        user = doc;
+        return doc.verifyPassword(password);
+      })
+      .then(verified => {
+        if (!verified) {
+          const message = 'Email or password are not valid';
+
+          next({
+            success: false,
+            message,
+            statusCode: 200,
+            type: 'info',
+          });
+        } else {
+          const { _id } = user;
+          const token = signToken({ _id });
+
+          res.json({
+            success: true,
+            item: user,
+            meta: {
+              token,
+            },
+          });
+        }
+      })
+      .catch(err => {
+        next(new Error(err));
+      });
+  }
 };
 
 exports.create = (req, res, next) => {
