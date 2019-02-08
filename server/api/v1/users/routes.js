@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const controller = require('./controller');
-const { auth, owner } = require('./../auth');
+const { auth, me } = require('./../auth');
 
 router.param('id', controller.id);
 
@@ -15,7 +15,7 @@ router.route('/signin').post(controller.signin);
 router
   .route('/:id')
   .get(auth, controller.read)
-  .put(auth, owner, controller.update)
-  .delete(auth, owner, controller.delete);
+  .put(auth, me, controller.update)
+  .delete(auth, me, controller.delete);
 
 module.exports = router;

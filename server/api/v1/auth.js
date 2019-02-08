@@ -39,7 +39,7 @@ const auth = (req, res, next) => {
   }
 };
 
-const owner = (req, res, next) => {
+const me = (req, res, next) => {
   const { decoded = {}, params = {} } = req;
   const { _id = null } = decoded;
   const { id } = params;
@@ -57,8 +57,27 @@ const owner = (req, res, next) => {
   }
 };
 
+const owner = (req, res, next) => {
+  const { decoded = {}, doc = {} } = req;
+  const { _id = null } = decoded;
+  const { id } = doc.author;
+  if (_id !== id) {
+    const message = 'Forbidden';
+
+    next({
+      success: false,
+      message,
+      statusCode: 403,
+      type: 'warn',
+    });
+  } else {
+    next();
+  }
+};
+
 module.exports = {
   signToken,
   auth,
+  me,
   owner,
 };
