@@ -8,6 +8,10 @@ const fields = {
     required: true,
     trim: true,
   },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 const references = {
