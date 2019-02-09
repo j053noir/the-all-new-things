@@ -26,6 +26,15 @@ const task = new Schema(Object.assign(fields, references), {
   timestamps: true,
 });
 
+task.post('save', (doc, next) => {
+  doc
+    .populate('author')
+    .execPopulate()
+    .then(() => {
+      next();
+    });
+});
+
 module.exports = {
   Model: mongoose.model('task', task),
   fields,
