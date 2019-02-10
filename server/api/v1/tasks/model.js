@@ -8,6 +8,10 @@ const fields = {
     required: true,
     trim: true,
   },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 const references = {
@@ -20,6 +24,15 @@ const references = {
 
 const task = new Schema(Object.assign(fields, references), {
   timestamps: true,
+});
+
+task.post('save', (doc, next) => {
+  doc
+    .populate('author')
+    .execPopulate()
+    .then(() => {
+      next();
+    });
 });
 
 module.exports = {
